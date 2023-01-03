@@ -10,3 +10,9 @@ from .models import Group,GroupMember
 class CreateGroup(LoginRequiredMixin,CreateView):
     fields= ('name','description')
     model = Group
+    
+class SingleGroup(DetailView):
+    model = Group
+
+class ListGroup(ListView):
+    model = Group
