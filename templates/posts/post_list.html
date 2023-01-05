@@ -3,16 +3,20 @@
 {% block prepost %}
 
 <div class="col-md-4">
-    {% if requesr.user.is_authenticated %}
+    {% if request.user.is_authenticated %}
     <div class="card card-with-shadow">
         <div class="content">
             <h5 class='title'>Your Groups</h5>
             <ul class='list-unstyled'>
-                {% for member_group in   %}{% endfor %}
+                {% for member_group in get_user_groups  %}
+                <li><a href="{% url 'groups:single' slug=member_group.group.slug %}"></a></li>
+                
+                {% endfor %}
             </ul>
         </div>
     </div>
     {% endif %}
+
 </div>
 
 {% endblock  %}
