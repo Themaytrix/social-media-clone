@@ -1,0 +1,18 @@
+{% extends 'posts/post_base.html' %}
+
+{% block prepost %}
+
+<div class="col-md-4">
+    {% if requesr.user.is_authenticated %}
+    <div class="card card-with-shadow">
+        <div class="content">
+            <h5 class='title'>Your Groups</h5>
+            <ul class='list-unstyled'>
+                {% for member_group in   %}{% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock  %}

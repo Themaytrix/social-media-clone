@@ -29,7 +29,7 @@ class Group(models.Model):
         self.description_html = misaka.html(self.description)
         super().save(*args,**kwargs)
     
-    # redirect after creating group
+    # redirect onto created group
     def get_absolute_url(self):
         return reverse("groups:single", kwargs={"slug": self.slug})
     
