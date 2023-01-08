@@ -9,7 +9,7 @@
             <h5 class='title'>Your Groups</h5>
             <ul class='list-unstyled'>
                 {% for member_group in get_user_groups  %}
-                <li><a href="{% url 'groups:single' slug=member_group.group.slug %}"></a></li>
+                <li><a href="{% url 'groups:single' slug=member_group.group.slug %}">{{ member_group.name }}</a></li>
                 {% endfor %}
             </ul>
         </div>

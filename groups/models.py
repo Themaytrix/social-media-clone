@@ -41,7 +41,7 @@ class GroupMember(models.Model):
     # getting the group the user is in
     group = models.ForeignKey(Group,on_delete=models.CASCADE,related_name='membership')
     # getting the list of groups member is in
-    user = models.ForeignKey(related_name='user_groups')
+    user = models.ForeignKey(User,related_name='user_groups',on_delete=models.CASCADE)
     
     def __str__(self) -> str:
         return self.user.username

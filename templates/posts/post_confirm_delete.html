@@ -4,7 +4,10 @@
 <h4> Confirm Delete?</h4>
 <div class="posts">
     {% include "posts/_post.html" with post=object hide_delete=True %}
-    <input type="submit" value="Confirm Delete" >
-    <a href="{% url 'posts:single' username=user.username pk=object.pk%}">Cancel</a>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Confirm Delete" >
+        <a href="{% url 'posts:single' username=user.username pk=object.pk%}">Cancel</a></form>
+    
 </div>
 {% endblock  %}

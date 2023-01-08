@@ -28,9 +28,28 @@ class JoinGroup(LoginRequiredMixin,RedirectView):
         # get the group onject at slug url
         group = get_object_or_404(Group,slug=self.kwargs.get('slug'))
         try:
+            # create a member of object(user) if user is now hoining group
             GroupMember.objects.create(user=self.request.user,group=group)
         except :
-            messages.warning()
+            messages.warning(self.request,"Already a member!!")
+        else:
+            messages.success(self.request,"Joined group")
+            
+        return super().get(request,*args,**kwargs)
+    
+    
 
-class LeaveGroup():
-    pass
+class LeaveGroup(LoginRequiredMixin,RedirectView):
+    # getting the url to redirect to
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse('groups:single',kwargs={'slug':self.kwargs.get('slug')})
+    
+    def get(self,request,*args,**kwargs):
+        try:
+            membership = GroupMember.objects.filter(user=self.request.user,group__slug=self.kwargs.get('slug')).get()
+        except GroupMember.DoesNotExist:
+            messages.warning(self.request,"sorry you are not in this group")
+        else:
+            membership.delete()
+            messages.success(self.request,'You have left the group!')
+        return super().get(request,*args,**kwargs)

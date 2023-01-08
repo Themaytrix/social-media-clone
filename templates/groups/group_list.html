@@ -29,15 +29,13 @@
             <a class="list-group-item" href="{% url 'groups:single' slug=group.slug%}">
                 <h3 class="list-group-title">{{ group.name }}</h3>
                 <div class="list-group-description">
-                    {{group.description|safe}}
+                    {{ group.description|safe }}
                     <div class="row">
                         <div class="col-md-4">
-                            <span class="badge">{{ group.members.count }}</span>
-                            member{{group.members.count|pluralize}}
+                            {{group.members.count}}member{{ group.members.count|pluralize}}
                         </div>
                         <div class="col-md-4">
-                            <span class="badge">{{ group.posts.count }}</span>
-                            post{{group.posts.count|pluralize}}
+                            {{ group.posts.count }}post{{group.posts.count|pluralize}}
                         </div>
                     </div>
                 </div>

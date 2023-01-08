@@ -23,7 +23,7 @@ class UserPosts(ListView):
     
     def get_queryset(self):
         try:
-            self.post.user = User.objects.prefetch_related('posts').get(username__iexact =self.kwargs.get('user'))
+            self.post_user = User.objects.prefetch_related('posts').get(username__iexact =self.kwargs.get('username'))
         except User.DoesNotExist:
             raise Http404
         else:
@@ -52,7 +52,7 @@ class CreatPost(LoginRequiredMixin,SelectRelatedMixin,CreateView):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save() 
-        return super().form_validation(form)
+        return super().form_valid(form)
     
 
 class DeletePost(LoginRequiredMixin,SelectRelatedMixin,DeleteView):

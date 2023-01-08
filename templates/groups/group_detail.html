@@ -6,20 +6,20 @@
 <div class="content">
     {% if user in group.members.all %}
         {% comment %} leave group {% endcomment %}
-        <a href="">Leave</a>
+        <a href="{% url 'groups:leave' slug=group.slug %}">Leave</a>
     {% else %}
         {% comment %} join group {% endcomment %}
-        <a href="">Join</a>
+        <a href="{% url 'groups:join' slug=group.slug %}">Join</a>
     {% endif %}
 </div>
 {% endblock  %}
 
 {% block group_content %}
 <div class= "col-md-8">
-    {% if group.post.count == 0 %}
+    {% if group.posts.count == 0 %}
     <h4>No post here</h4>
     {% else %}
-    {% for post in group.post.all  %}
+    {% for post in group.posts.all  %}
     {% include 'posts/_post.html' %}
     {% endfor %}
 

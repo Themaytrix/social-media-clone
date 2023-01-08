@@ -28,11 +28,11 @@
             </ul>
             <ul class="nav justify-content-end">
                 {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link"href="">Post</a></li>
-                <li class="nav-item"><a class="nav-link "href="">Groups</a></li>
+                <li class="nav-item"><a class="nav-link"href="{% url 'posts:create' %}">Post</a></li>
+                <li class="nav-item"><a class="nav-link "href="{% url 'groups:all' %}">Groups</a></li>
                 <li class="nav-item dropdown"><a class="nav-link dropdown-toggle"href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
                 <ul class='dropdown-menu'>
-                    <li class='drppdown-item'><a href="{% url 'accounts:logout' %}">Create Group</a></li>
+                    <li class='drppdown-item'><a href="{% url 'groups:create' %}">Create Group</a></li>
                     <li class='drppdown-item'><a href="{% url 'accounts:logout' %}">Logout</a></li>
                 </ul>
                 </li>
