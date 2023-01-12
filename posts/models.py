@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.conf import settings
 import misaka
+from django.utils import timezone
 
 from groups.models import Group
 from django.contrib.auth import get_user_model
@@ -26,11 +27,26 @@ class Post(models.Model):
         super().save(*args,**kwargs)
         
     def get_absolute_url(self):
-        return reverse("posts:single", kwargs={"username": self.user.username,
-                                            'pk':self.pk
-                                            })
+        return reverse("posts:single", kwargs={"username": self.user.username,'pk':self.pk})
         
     class Meta:
         ordering = ['-created_at']
         unique_together =['user','message']
     
+class Comment(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='comment')
+    created_at = models.DateTimeField(auto_now=True)
+    comment_text = models.TextField()
+    comment_html = models.TextField(editable=False)
+    post = models.ForeignKey(Post,related_name='comment',null=True,on_delete=models.CASCADE)
+    
+    def __str__(self) -> str:
+        return f"@{self.post.user}-{self.comment_text}"
+    
+    def get_absolute_url(self):
+        return reverse("posts:single", kwargs={"username": self.user.username,'pk':self.post.pk})
+    
+    
+    class Meta:
+        # creating a unique id for post and comment_text
+        unique_together = ['post','comment_text']

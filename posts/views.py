@@ -8,7 +8,7 @@ from django.contrib import messages
 
 # Create your views here.
 from braces.views import SelectRelatedMixin
-from .models import Post
+from .models import Post,Comment
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -17,6 +17,23 @@ class PostList(SelectRelatedMixin,ListView):
     model = Post
     select_related = ('user','group')
     
+
+class CreateComment(LoginRequiredMixin,CreateView):
+    model = Comment
+    fields = ('comment_text',)
+    
+    # validate form
+    def form_valid(self,form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save() 
+        return super().form_valid(form)
+
+class CommentList(ListView):
+    model = Comment
+    
+    def get_context_data(self, **kwargs):
+        pass
 class UserPosts(ListView):
     model = Post
     template_name = 'posts/user_post_list.html'
@@ -49,6 +66,7 @@ class CreatPost(LoginRequiredMixin,SelectRelatedMixin,CreateView):
     
     # validate form
     def form_valid(self,form):
+        print(self.object)
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save() 
@@ -67,3 +85,4 @@ class DeletePost(LoginRequiredMixin,SelectRelatedMixin,DeleteView):
     def delete(self,*args,**kwargs):
         messages.success(self.request,'Post Deleted')
         return super().delete(*args,**kwargs)
+    

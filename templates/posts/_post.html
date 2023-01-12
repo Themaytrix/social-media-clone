@@ -15,6 +15,7 @@
         <div class="media-footer">
             {% if user.is_authenticated and post.user == user %}
             <a href="{% url 'posts:delete' pk=post.pk%}" title="delete">Delete Post</a>
+            <a href="{% url 'posts:comment' %}">Comment</a>
             {% endif %}
         </div>
     </div>
