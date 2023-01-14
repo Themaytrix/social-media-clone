@@ -2,14 +2,14 @@
 
 {% block prepost %}
 
-<div class="col-md-4">
+{% comment %} <div class="col-md-4">
     {% if request.user.is_authenticated %}
     <div class="card card-with-shadow">
         <div class="content">
             <h5 class='title'>Your Groups</h5>
             <ul class='list-unstyled'>
-                {% for member_group in get_user_groups  %}
-                <li><a href="{% url 'groups:single' slug=member_group.group.slug %}">{{ member_group.name }}</a></li>
+                {% for membership_group in get_user_groups  %}
+                <li><a href="{% url 'groups:single' slug=membership_group.group.slug %}">{{ member_group.name }}</a></li>
                 {% endfor %}
             </ul>
         </div>
@@ -26,7 +26,7 @@
         </div>
 
     </div>
-</div>
+</div> {% endcomment %}
 
 {% endblock  %}
 
