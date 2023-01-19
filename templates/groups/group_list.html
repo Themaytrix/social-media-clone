@@ -32,10 +32,23 @@
                     {{ group.description|safe }}
                     <div class="row">
                         <div class="col-md-4">
-                            {{group.members.count}}member{{ group.members.count|pluralize}}
+                            {{group.members.count}} member{{ group.members.count|pluralize}}
                         </div>
                         <div class="col-md-4">
-                            {{ group.posts.count }}post{{group.posts.count|pluralize}}
+                            {{ group.posts.count }} post{{group.posts.count|pluralize}}
+                        </div>
+                        <div class="col-md-4">
+                            {% comment %} {% if user.username == amember %}
+                            You are a member
+                            {% else %}
+                            Not a member yet
+                            {% endif %} {% endcomment %}
+                            {% if amember %}
+                            you are a member
+                            {% else %}
+                            yet to join
+                            {% endif %}
+                            
                         </div>
                     </div>
                 </div>

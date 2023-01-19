@@ -32,8 +32,8 @@ class CreateComment(LoginRequiredMixin,CreateView):
 class CommentList(ListView):
     model = Comment
     
-    def get_context_data(self, **kwargs):
-        pass
+    
+    
 class UserPosts(ListView):
     model = Post
     template_name = 'posts/user_post_list.html'

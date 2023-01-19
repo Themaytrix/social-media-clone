@@ -18,6 +18,16 @@ class SingleGroup(DetailView):
 class ListGroup(ListView):
     model = Group
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            group_member = GroupMember.objects.get(user=self.request.user)
+            context['amember'] = group_member
+        except:
+            messages.warning(self.request,"You left or not a member")
+        return context
+    
+    
 class JoinGroup(LoginRequiredMixin,RedirectView):
     # getting the url to redirect to
     def get_redirect_url(self, *args, **kwargs):
@@ -28,7 +38,7 @@ class JoinGroup(LoginRequiredMixin,RedirectView):
         # get the group onject at slug url
         group = get_object_or_404(Group,slug=self.kwargs.get('slug'))
         try:
-            # create a member of object(user) if user is now hoining group
+            # create a member of object(user) if user is now joining group
             GroupMember.objects.create(user=self.request.user,group=group)
         except :
             messages.warning(self.request,"Already a member!!")

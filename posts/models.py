@@ -38,10 +38,14 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     comment_text = models.TextField()
     comment_html = models.TextField(editable=False)
-    post = models.ForeignKey(Post,related_name='comment',null=True,on_delete=models.CASCADE)
+    post = models.ForeignKey(Post,related_name='comment',on_delete=models.CASCADE)
     
     def __str__(self) -> str:
-        return f"@{self.post.user}-{self.comment_text}"
+        return f"@{self.post.user}-{self.comment_html}"
+    
+    def save(self,*args,**kwargs):
+        self.comment_html = misaka.html(self.comment_text)
+        super().save(*args,**kwargs)
     
     def get_absolute_url(self):
         return reverse("posts:single", kwargs={"username": self.user.username,'pk':self.post.pk})
