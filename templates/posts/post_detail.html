@@ -3,6 +3,12 @@
 {% block post_content %}
     <div class="post">
         {% include 'posts/_post.html' %}
-        {% include 'posts/comment_list.html' %}
+        {% comment %} {% include 'posts/comment_list.html' %} {% endcomment %}
+        <br>
+        Comments
+        {% for comment in  comments%}
+            <h5>{{ comment.comment_html|safe }}</h5>
+            <a href="{% url 'posts:for_user' username=post.user.username%}"><h6>by @{{ post.user.username }}</h6></a>
+        {% endfor %}
     </div>
 {% endblock  %}

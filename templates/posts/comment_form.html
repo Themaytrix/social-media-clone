@@ -3,7 +3,7 @@
 {% block  post_content %}
 <div class="comment">
     <h4>Create Comment</h4>
-    <form method="post">
+    <form  method="post" >
         {% csrf_token %}
         {% bootstrap_form form %}
         <input type="submit" value="Comment">
